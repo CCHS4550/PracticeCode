@@ -38,7 +38,6 @@ public interface RobotMap {
      public static final int INTAKE_TOP = 7;
      public static final boolean INTAKE_TOP_REVERSE = true; //change
 
-     
      public static final int INTAKE_BOTTOM = 6;
      public static final boolean INTAKE_BOTTOM_REVERSE = true;
 
