@@ -3,11 +3,12 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.helpers.CCSparkMax;
 import frc.helpers.OI;
 import frc.maps.RobotMap;
 
-public class Intake {
+public class Intake extends SubsystemBase{
     // Intake up/down motor
     private final CCSparkMax arm = new CCSparkMax("Arm", "arm", RobotMap.ARM, MotorType.kBrushless, IdleMode.kBrake, RobotMap.ARM_REVERSE);
 

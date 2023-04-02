@@ -53,4 +53,8 @@ public class DoubleEntry extends ShuffleManager {
     public double value(){
         return entry.getDouble(0);
     }
+
+    public void set(double val){
+        entry.setDouble(val);
+    }
 }
