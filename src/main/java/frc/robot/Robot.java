@@ -9,6 +9,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.helpers.OI;
+import frc.maps.ControlMap;
+import frc.robot.subsystems.Intake;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
   private RobotContainer container;
+  private Intake intake;
+ 
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -29,6 +37,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     container = new RobotContainer();
+    intake = new Intake();
+  
 
     //UsbCamera thing = CameraServer.startAutomaticCapture();
     //new Camera("Amogus" , thing);
@@ -99,4 +109,16 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  public void buttonMaps(){
+    new JoystickButton(OI.joystickArray[1] , ControlMap.DPAD_UP)
+    .whileTrue(new RunCommand(() -> intake.shoot()));
+
+    new JoystickButton(OI.joystickArray[1] , ControlMap.DPAD_DOWN)
+    .whileTrue(new RunCommand(() -> intake.intake()));
+
+    
+
+
+  }
 }
