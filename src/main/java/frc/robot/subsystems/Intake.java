@@ -27,13 +27,13 @@ public class Intake {
 
 
     public void shoot(){
-        intakeBottom.set(0.8);
-        intakeTop.set(0.8);
+        intakeBottom.set(0.3);
+        intakeTop.set( 0.3);
     }
 
     public void intake(){
-        intakeBottom.set(-0.8);
-        intakeTop.set(0.8);
+        intakeBottom.set(-0.3);
+        intakeTop.set(0.3);
     }
 
     /**
@@ -45,6 +45,11 @@ public class Intake {
     public void moveIntake(double speed){
         
         move.set(OI.normalize(speed, -0.5, 0.5));
+    }
+
+    public void setZero(){
+        intakeBottom.set(0);
+        intakeTop.set(0);
     }
 
     

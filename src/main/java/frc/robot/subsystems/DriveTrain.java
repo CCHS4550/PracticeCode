@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.helpers.CCSparkMax;
 import frc.maps.RobotMap;
 
@@ -22,9 +25,12 @@ public class DriveTrain {
     MotorControllerGroup left = new MotorControllerGroup(frontLeft , backLeft);
     MotorControllerGroup rightSize = new MotorControllerGroup(frontRight, backRight);
 
-    public void axisDrive(double speed, double turnSpeed){
 
+    public void drive(){
+       new RunCommand(() -> new DifferentialDrive(left, rightSize)); 
     }
+
+    
 
 
   

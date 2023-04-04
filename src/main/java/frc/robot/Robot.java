@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.helpers.OI;
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() { buttonMaps();}
 
   @Override
   public void testInit() {
@@ -111,14 +112,13 @@ public class Robot extends TimedRobot {
   public void simulationPeriodic() {}
 
   public void buttonMaps(){
-    new JoystickButton(OI.joystickArray[1] , ControlMap.DPAD_UP)
-    .whileTrue(new RunCommand(() -> intake.shoot()));
-
-    new JoystickButton(OI.joystickArray[1] , ControlMap.DPAD_DOWN)
-    .whileTrue(new RunCommand(() -> intake.intake()));
-
+    new JoystickButton(OI.joystickArray[1] , ControlMap.A_BUTTON)
+    .onTrue(new InstantCommand(() -> intake.shoot()))
+    .onFalse(new InstantCommand(() -> intake.setZero()));
     
-
-
+    /* 
+    new JoystickButton(OI.joystickArray[1] , ControlMap.B_BUTTON)
+    .whileTrue(new RunCommand(() -> intake.intake()));
+*/
   }
 }
