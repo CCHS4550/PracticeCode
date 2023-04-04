@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.helpers.CCSparkMax;
+import frc.helpers.OI;
 import frc.maps.RobotMap;
 
 public class Intake {
@@ -41,9 +42,9 @@ public class Intake {
      * @param yVal
      */
      
-    public void moveIntake(double yVal){
+    public void moveIntake(double speed){
         
-        move.set( yVal > 0 ? 3: -3);
+        move.set(OI.normalize(speed, -0.5, 0.5));
     }
 
     
