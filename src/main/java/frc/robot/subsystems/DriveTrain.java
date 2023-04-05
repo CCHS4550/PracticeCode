@@ -34,38 +34,30 @@ public class DriveTrain {
 
     PIDController gyroControl = new PIDController(0.5, 0, 0);
     public AHRS gyro = new AHRS(SPI.Port.kMXP);
+    double slowmodeFactor = 1;
 
-    public double defaultAccelTime = 0.15;
-    public double slowmodeFactor = 1.0;
+    public void axisDrive(double targetSpeed, double turnSpeed){
+      arcade(targetSpeed * slowmodeFactor, turnSpeed * slowmodeFactor);
+    }
 
-    public double currentSpeed = 0.0;
-    public double deltaTime = 0.2;
+    public void arcade(double yAxis, double xAxis){
+      left.set(yAxis * .5);
+      right.set(yAxis * .5);
 
-    /**a
-     * @param targetSpeed The speed that will be accelerated to
-     * @param turnSpeed The turning speed; this one will not accelerate
-     * @param accelTime The time it will take to accelerate to max speed in seconds.
-     */
+    }
 
-     public void axisDrive(double targetSpeed, double turnSpeed, double accelTime)
-     {
-        if (accelTime != 0){
+    public void toggleSlowmode(){
+      slowmodeFactor = slowmodeFactor == 1 ? 1 : .5;
+    }
 
-        }
-        else 
-        {
-            
-        }
-     }
+    
 
-     public void arcade(double yAxis, double xAxis){
-        double max = 1;
-        left.set(OI.normalize((yAxis - xAxis), -max, max));
-        right.set(OI.normalize((yAxis + xAxis), -max, max));
-     }
+
+
+
 
      public void balance(double gyroAngle){
-        
+        arcade(gyroControl.calculate(gyroAngle), 0);
      }
 
 }
