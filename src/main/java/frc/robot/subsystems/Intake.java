@@ -36,11 +36,7 @@ public class Intake {
         intakeTop.set(0.3);
     }
 
-    /**
-     * 
-     * @param xVal: The 
-     * @param yVal
-     */
+   
      
     public void moveIntake(double speed){
         
@@ -50,6 +46,10 @@ public class Intake {
     public void setZero(){
         intakeBottom.set(0);
         intakeTop.set(0);
+    }
+
+    public void intakeControl(double speed){
+        move.set(OI.normalize(speed , -0.3 , 0.3));
     }
 
     
