@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.helpers.CCSparkMax;
 import frc.helpers.OI;
 import frc.maps.RobotMap;
 
-public class DriveTrain {
+public class DriveTrain extends SubsystemBase{
     
     double currentSpeed = 0.0;
     CCSparkMax frontRight = new CCSparkMax("frontRight", "fr", RobotMap.FRONT_RIGHT, null, null, false, RobotMap.DRIVE_ENCODER);
@@ -30,14 +31,15 @@ public class DriveTrain {
     MotorControllerGroup right = new MotorControllerGroup(frontRight, backRight);
 
         AHRS gyro = new AHRS();
-
+/* 
     public void arcadeDrive(double xVal , double yVal){
         left.set(OI.normalize(yVal - xVal, -1, 1));
         right.set(OI.normalize(yVal + xVal , -1 , 1));
     }
-
-    public void axisDrive(double turnSpeed){
-        arcadeDrive((currentSpeed * currentSpeed) * Math.signum(currentSpeed) , (turnSpeed * turnSpeed) * Math.signum(turnSpeed));
+*/
+    public void axisDrive(double speed , double turnSpeed){
+        DifferentialDrive dif = new DifferentialDrive(left, right);
+        dif.arcadeDrive(0.5, turnSpeed);
     }
 
     public void moveTo(){
@@ -55,6 +57,15 @@ public class DriveTrain {
 
        }
        );
+    }
+
+    public RunCommand turnAngle(double angle){
+        PIDController ang = new PIDController(0.01, 0, 0);
+
+        return new RunCommand(() -> {
+            ang.calculate(gyro.getAngle() , 30);
+
+        });
     }
 
     public void balance(double yaw){
