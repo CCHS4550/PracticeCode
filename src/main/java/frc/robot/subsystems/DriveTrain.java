@@ -25,14 +25,21 @@ public class DriveTrain extends SubsystemBase {
 
     DifferentialDrive driveTrain = new DifferentialDrive(left, right);
 
+    double slowmode = 1;
+
     public void axisDrive(double speed, double turnSpeed) {
-        driveTrain.arcadeDrive(speed, turnSpeed);
+        driveTrain.arcadeDrive(speed * slowmode, turnSpeed * slowmode);
+    }
+
+    public void toggleSlowMode() {
+        slowmode = slowmode == 1 ? 0.5 : 1;
     }
 
     double kp = 0.1;
     public RunCommand driveDistance(double distance) {
+        frontLeft.reset();
         RunCommand res = new RunCommand(() -> {
-            axisDrive(OI.normalize(kp * (distance - frontLeft.getPosition()), 0, 0.6), 0);
+            axisDrive(OI.normalize(kp * (distance - frontLeft.getPosition()), 0, 0.2), 0);
         }, this) {
             @Override
             public boolean isFinished(){
@@ -46,11 +53,23 @@ public class DriveTrain extends SubsystemBase {
     public RunCommand turnAngle(double angle) {
         gyro.reset();
         RunCommand res = new RunCommand(() -> {
-            axisDrive(0, OI.normalize(kp * (angle - gyro.getAngle()), 0, 0.3));
+            axisDrive(0, OI.normalize(kpAng * (angle - gyro.getAngle()), 0, 0.1));
         }, this) {
             @Override
             public boolean isFinished() {
                 return angle - gyro.getAngle() < 5;
+            }
+        };
+        return res;
+    }
+
+    public RunCommand balance() {
+        RunCommand res = new RunCommand(() -> {
+            axisDrive(0.2, 0);
+        }, this) {
+            @Override
+            public boolean isFinished() {
+                return Math.abs(gyro.getPitch()) < 5; 
             }
         };
         return res;
