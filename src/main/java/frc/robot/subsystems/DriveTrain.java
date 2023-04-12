@@ -33,7 +33,7 @@ public class DriveTrain extends SubsystemBase{
     MotorControllerGroup left = new MotorControllerGroup(fLeft, bLeft);
     MotorControllerGroup right = new MotorControllerGroup(fRight, bRight);
 
-    DifferentialDrive driveTrain = new DifferentialDrive(left, right)
+    DifferentialDrive driveTrain = new DifferentialDrive(left, right);
 
     PIDController gyroControl = new PIDController(0.5, 0, 0);
     public AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -72,8 +72,21 @@ public class DriveTrain extends SubsystemBase{
       slowmodeFactor = slowmodeFactor == 1 ? 1 : .5;
     }
 
-     public void balance(double gyroAngle){
-      driveTrain.arcadeDrive(gyroControl.calculate(gyroAngle), 0);
-     }
+     public RunCommand balance(){
+      RunCommand res = new RunCommand(() -> {
+        //what it does
+        if(gyro.getRoll() > 2.5)
+          axisDrive(.25, 0);
+        else if (gyro.getRoll() < -2.5)
+          axisDrive(-.25, 0);
+     }, this) {
+      @Override
+      public boolean isFinished(){
+        return Math.abs(gyro.getRoll()) < 0.5;
+      }
+     };
+     return res;
+    }
+     
 
 }
