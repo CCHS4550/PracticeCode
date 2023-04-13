@@ -40,7 +40,6 @@ public class Intake extends SubsystemBase{
    
      
     public void moveIntake(double speed){
-        
         move.set(OI.normalize(speed, -0.5, 0.5));
     }
 

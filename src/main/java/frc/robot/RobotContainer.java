@@ -10,24 +10,24 @@ import frc.helpers.OI;
 import frc.maps.ControlMap;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.Autonomous;
 
 public class RobotContainer{
 
     DriveTrain chassis = new DriveTrain();
     Intake intake = new Intake();
+    Autonomous auto = new Autonomous();
 
     public RobotContainer() {
+        
         chassis.setDefaultCommand(new RunCommand(() -> chassis.axisDrive(OI.axis(0, ControlMap.L_JOYSTICK_VERTICAL) , OI.axis(0, ControlMap.R_JOYSTICK_HORIZONTAL)))); 
+        intake.setDefaultCommand(new RunCommand(() -> intake.moveIntake(OI.axis(1 , ControlMap.L_JOYSTICK_VERTICAL))));
+    
         
     }
     public Command getAutoCommand() {
         
-
-        new RunCommand(() -> intake.moveIntake(OI.axis(1, ControlMap.L_JOYSTICK_VERTICAL) > 0 ? 0.3 : -0.3));
-
-       new RunCommand(() -> chassis.driveDistance(5));
-
-        return new RunCommand(() -> System.out.println("0"));
+        return auto.RegularAuto();
 
     }
 }

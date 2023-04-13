@@ -63,26 +63,28 @@ public class DriveTrain extends SubsystemBase{
         PIDController ang = new PIDController(0.01, 0, 0);
 
         return new RunCommand(() -> {
-            ang.calculate(gyro.getAngle() , 30);
+            double turnspeed = ang.calculate(gyro.getAngle() , gyro.getAngle() + angle);
 
+            left.set(OI.normalize(turnspeed , -0.1 , 0.1));
+            right.set(OI.normalize(-turnspeed , -0.1 , 0.1));
         });
     }
 
-    public void balance(double yaw){
-        if(yaw > 2){
-            left.set(-2);
-            right.set(-2);
-        }
-        else if(yaw < 2){
-            left.set(2);
-            right.set(2);
-        }
-        else{
-            left.set(0);
-            right.set(0);
+    public void balance(AHRS gyro2){
+        PIDController bal = new PIDController(0.01 , 0, 0);
+        double speed = 5; 
+        double damp = Math.abs(bal.calculate(gyro.getYaw() , 0)) / 100;
+        
+        while(gyro.getYaw() >= 0){
+            left.set(OI.normalize(speed * damp, -2, 2));
+            right.set(OI.normalize(speed  * damp , -2 , 2));
         }
         
     }
+
+   
+
+    
     
 
 
