@@ -14,13 +14,21 @@ public class Autonomous extends SubsystemBase{
     private AHRS gyro = new AHRS();
 
     public SequentialCommandGroup RegularAuto(){
+        
     SequentialCommandGroup auto = new SequentialCommandGroup(
+        /* 
         new RunCommand(() -> shooter.shoot()),
         new RunCommand(() -> shooter.setZero()),
         new RunCommand(() -> chassis.driveDistance(5)),
         new RunCommand(() -> chassis.driveDistance(-5)),
         new RunCommand(() -> chassis.balance(gyro))
+        */
+
+        new RunCommand(() -> chassis.turnAngle(30))
     );
+    
+
+        
 
     return auto;
     }

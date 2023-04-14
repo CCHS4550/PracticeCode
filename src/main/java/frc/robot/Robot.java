@@ -112,9 +112,8 @@ public class Robot extends TimedRobot {
   public void simulationPeriodic() {}
 
   public void buttonMaps(){
-    new JoystickButton(OI.joystickArray[1] , ControlMap.A_BUTTON)
-    .onTrue(new InstantCommand(() -> intake.shoot()))
-    .onFalse(new InstantCommand(() -> intake.setZero()));
+
+    
 
 
     

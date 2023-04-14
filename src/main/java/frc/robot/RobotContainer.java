@@ -20,8 +20,18 @@ public class RobotContainer{
 
     public RobotContainer() {
         
-        chassis.setDefaultCommand(new RunCommand(() -> chassis.axisDrive(OI.axis(0, ControlMap.L_JOYSTICK_VERTICAL) , OI.axis(0, ControlMap.R_JOYSTICK_HORIZONTAL)))); 
-        intake.setDefaultCommand(new RunCommand(() -> intake.moveIntake(OI.axis(1 , ControlMap.L_JOYSTICK_VERTICAL))));
+        chassis.setDefaultCommand(
+            new RunCommand(() -> {
+
+                chassis.axisDrive(OI.axis(0, ControlMap.L_JOYSTICK_VERTICAL) , OI.axis(0, ControlMap.R_JOYSTICK_HORIZONTAL));
+                
+            } )); 
+
+        intake.setDefaultCommand(new RunCommand(() -> {
+
+            intake.moveIntake(OI.axis(1 , ControlMap.L_JOYSTICK_VERTICAL));
+            intake.intake(OI.axis(1 , ControlMap.R_JOYSTICK_VERTICAL));
+        }));
     
         
     }
